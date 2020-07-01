@@ -6,7 +6,15 @@ const prefix = "%";
 const getChuckNorrisJoke = async (message) => {
   let result = await axios.get(`https://api.chucknorris.io/jokes/random`);
   console.log(result.data);
-  message.channel.send(result.data.value);
+  /*
+  {embed: {
+  color: 3447003,
+  description: "A very simple Embed!"
+}}
+   */
+  message.channel.send({
+    embed: { color: 3447003, description: result.data.value },
+  });
 };
 client.on("ready", () => {
   console.log("I am ready!");
