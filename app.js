@@ -15,15 +15,20 @@ const getTopNews = async (message) => {
   let result = await axios.get(
     `https://newsapi.org/v2/top-headlines?country=au&apiKey=${process.env.NEWS_KEY}`
   );
-  console.log(result.data.articles[1]);
+
   //message.channel.send(result.data.articles[0].title);
-  message.channel.send({
-    embed: {
-      color: 1022869,
-      title: result.data.articles[1].title,
-      url: result.data.articles[1].url,
-      description: result.data.articles[1].description,
-    },
+  result.data.articles.forEach((article) => {
+    if (article.source.name === "ABC News (AU)") {
+      console.log(article);
+      message.channel.send({
+        embed: {
+          color: 1022869,
+          title: article.title,
+          url: article.url,
+          description: article.description,
+        },
+      });
+    }
   });
 };
 client.on("ready", () => {
